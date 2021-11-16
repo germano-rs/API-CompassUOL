@@ -1,0 +1,500 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Compass Hiring",
+    "url": "http://localhost:3000",
+    "description": "API sugested by Compass UOL for hiring - routes for cities and clients .",
+    "contact": {
+      "email": "german.o@outlook.com.br"
+    },
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/cities": {
+      "get": {
+        "summary": "Find Cities",
+        "description": "This route list registered cities, they can be filtered by name or state.",
+        "tags": ["Cities"],
+        "parameters": [
+          {
+            "name": "name",
+            "description": "Fetch cities by name",
+            "required": false,
+            "type": "string",
+            "in": "query"
+          },
+          {
+            "name": "state",
+            "description": "Fetch cities by state",
+            "required": false,
+            "type": "string",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/City-Response"
+                },
+                "examples": {
+                  "City-Response": {
+                    "value": {
+                      "result": [
+                        {
+                          "id": 1,
+                          "city_name": "Diamantina",
+                          "state": "MG"
+                        },
+                        {
+                          "id": 2,
+                          "city_name": "Curvelo",
+                          "state": "MG"
+                        }
+                      ],
+                      "message": "Successful get cities."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "City Registration",
+        "description": "This route register cities and their state.",
+        "tags": ["Cities"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/City"
+              },
+              "examples": {
+                "Client": {
+                  "value": {
+                    "city_name": "Diamantina",
+                    "state": "MG"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "CREATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Client-Response"
+                },
+                "examples": {
+                  "Client": {
+                    "value": {
+                      "result": [
+                        {
+                          "fieldCount": 0,
+                          "affectedRows": 1,
+                          "insertId": 1,
+                          "serverStatus": 2,
+                          "warningCount": 0,
+                          "message": "",
+                          "protocol41": true,
+                          "changedRows": 0
+                        }
+                      ],
+                      "message": "Successful post city Id 1."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients": {
+      "get": {
+        "summary": "List All Clients",
+        "description": "This route list registered clients, they can be filtered by name.",
+        "tags": ["Clients"],
+        "parameters": [
+          {
+            "name": "name",
+            "description": "Fetch clients by name",
+            "required": false,
+            "type": "string",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Client"
+                },
+                "examples": {
+                  "Client": {
+                    "value": {
+                      "result": [
+                        {
+                          "id": 1,
+                          "name": "Germano Raimar Silva",
+                          "genre": "Male",
+                          "birth_date": "30/05/1989",
+                          "age": 32,
+                          "city_name": "Diamantina"
+                        },
+                        {
+                          "id": 2,
+                          "name": "Cassiano Raimar Silva",
+                          "genre": "Male",
+                          "birth_date": "23/12/1985",
+                          "age": 35,
+                          "city_name": "Diamantina"
+                        }
+                      ],
+                      "message": "Successful get clients."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Client Registration",
+        "description": "This route register client and their data (name, genre, birth date and city.",
+        "tags": ["Clients"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Client"
+              },
+              "examples": {
+                "Client": {
+                  "value": {
+                    "name": "Germano Raimar Silva",
+                    "genre": "Male",
+                    "birth_date": "30/05/1989",
+                    "age": 32,
+                    "city_name": "Diamantina"
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "201": {
+            "description": "CREATED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Client-Response"
+                },
+                "examples": {
+                  "Client": {
+                    "value": {
+                      "result": [
+                        {
+                          "fieldCount": 0,
+                          "affectedRows": 1,
+                          "insertId": 1,
+                          "serverStatus": 2,
+                          "warningCount": 0,
+                          "message": "",
+                          "protocol41": true,
+                          "changedRows": 0
+                        }
+                      ],
+                      "message": "Successful get client with Id 1"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND - City is not registered.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Client-Response"
+                },
+                "examples": {
+                  "Client": {
+                    "value": {
+                      "message": "This city is not registered."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients/{id}": {
+      "get": {
+        "summary": "Find Client By ID",
+        "description": "This route find a client by your id.",
+        "tags": ["Clients"],
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Fetch clients by id",
+            "required": true,
+            "type": "integer",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Client-Response"
+                },
+                "examples": {
+                  "Client": {
+                    "value": {
+                      "result": [
+                        {
+                          "id": 1,
+                          "name": "Germano Raimar Silva",
+                          "genre": "Male",
+                          "birth_date": "30/05/1989",
+                          "age": 32,
+                          "city_name": "Diamantina"
+                        }
+                      ],
+                      "message": "Successful get client with Id 1"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update Client Name By ID",
+        "description": "This route update client name by your id.",
+        "tags": ["Clients"],
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Patch clients by id",
+            "required": true,
+            "type": "integer",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Client-Path"
+              },
+              "examples": {
+                "Client": {
+                  "value": {
+                    "name": "Germano Raimar Silva Sauro"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Client-Response"
+                },
+                "examples": {
+                  "Client": {
+                    "value": {
+                      "result": [
+                        {
+                          "id": 1,
+                          "name": "Germano Raimar Silva",
+                          "genre": "Male",
+                          "birth_date": "30/05/1989",
+                          "age": 32,
+                          "city_name": "Diamantina"
+                        }
+                      ],
+                      "message": "Successful get client with Id 1"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Client By ID",
+        "description": "This route delete a client by your id from database.",
+        "tags": ["Clients"],
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Delete clients by id",
+            "required": true,
+            "type": "integer",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Client-Response"
+                },
+                "examples": {
+                  "Client": {
+                    "value": {
+                      "id": 1,
+                      "name": "Germano Raimar Silva",
+                      "genre": "Male",
+                      "birth_date": "30/05/1989",
+                      "age": 32,
+                      "city_name": "Diamantina"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NOT FOUND - City is not registered."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "City-Response": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "city_name": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              }
+            }
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "City": {
+        "type": "object",
+        "properties": {
+          "city_name": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          }
+        }
+      },
+      "Client-Path": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "Client-Response": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "genre": {
+                  "type": "string"
+                },
+                "birth_date": {
+                  "type": "string"
+                },
+                "age": {
+                  "type": "integer"
+                },
+                "city_name": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "Client": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "genre": {
+            "type": "string"
+          },
+          "birth_date": {
+            "type": "string"
+          },
+          "age": {
+            "type": "integer"
+          },
+          "city_name": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
